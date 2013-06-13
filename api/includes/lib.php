@@ -32,7 +32,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 	$sql .= " AND pushid IS NOT null ";
 	$sql .= " AND pushid != ''";
 	
-	echo $sql;
+	//echo $sql;
 	
 	$rs = mysql_query($sql);
 		
@@ -41,7 +41,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 		$row = mysql_fetch_array($rs);
 		$pushid = $row['pushid'];
 		
-		echo $pushid;
+		//echo $pushid;
 	
 		//Get From User Information
 		$sql = " SELECT fb_user.name ";
@@ -60,7 +60,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 		$sql .= " WHERE friend.my_user_id = " . $to_user_id;
 		$sql .= " AND friend.friend_user_id = " . $from_user_id;
 		
-		echo $sql;
+		//echo $sql;
 		
 		$rs = mysql_query($sql);
 		
@@ -98,7 +98,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 			echo "fail to connect " . $err;die;
 			//exit("Failed to connect: $err $errstr" . PHP_EOL);
 		}else{
-			echo 'Connected to APNS' . PHP_EOL;	
+			//echo 'Connected to APNS';	
 
 			// Create the payload body
 			$body['aps'] = array(
@@ -106,6 +106,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 					'sound' => 'default',
 					'badge' =>  $badge
 				);
+			
 			$body['action'] = "tag_friend";					
 			$body['friend_id'] = $friend_id;
 			$body['tag_1'] = $tag_1;
