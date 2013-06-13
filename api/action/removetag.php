@@ -55,13 +55,13 @@
 			$sql .= " 	SELECT tag, ifnull(sum(cnt),0) as cntr FROM ( ";
 			$sql .= " 		SELECT tag_1 as tag , count(friend_id) as cnt ";
 			$sql .= " 		FROM friend ";
-			$sql .= " 		WHERE friend_user_id = " . $from_user_id;
+			$sql .= " 		WHERE friend_user_id = " . $to_user_id;
 			$sql .= " 		AND tag_status = 1 ";
 			$sql .= " 		GROUP BY tag_1 ";
 			$sql .= " 		UNION ";
 			$sql .= " 		SELECT tag_2 as tag , count(friend_id) as cnt ";
 			$sql .= " 		FROM friend ";
-			$sql .= " 		WHERE friend_user_id = " . $from_user_id;
+			$sql .= " 		WHERE friend_user_id = " . $to_user_id;
 			$sql .= " 		AND tag_status = 1 ";
 			$sql .= " 		GROUP BY tag_2 ";
 			$sql .= " 		) as tagging ";
@@ -92,7 +92,7 @@
 			$sql .= " tag_2 = " . $tag_2 . ",";
 			$sql .= " completed_requests = completed_requests + 1, ";
 			$sql .= " modified_date = '" . gmdate('Y-m-d H:i:s', time()) . "' ";
-			$sql .= " WHERE user_id = " . $from_user_id; 
+			$sql .= " WHERE user_id = " . $to_user_id; 
 
 			//echo $sql;
 			
