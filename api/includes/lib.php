@@ -12,7 +12,7 @@ function randomString($len) {
 }
 
 
-function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $tag2, $today){
+function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $tag_2, $today){
 
 	ini_set('display_errors', 'Off');
 	ini_set('display_startup_errors', 'Off');
@@ -73,6 +73,8 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 		$sql .= " FROM tag ";
 		$sql .= " WHERE tag_id = " . $tag_1 . " OR tag_id = ". $tag_2;
 		
+		//echo $sql;
+		
 		$rs = mysql_query($sql);
 		
 		//first tag
@@ -114,10 +116,13 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 			$body['tag_status'] = 0;
 			$body['created_date'] = $today;
 			
+			
+			//print_r($body);
+			
 			// Encode the payload as JSON
 			$payload = json_encode($body);				
 
-			$token = $row['push_id'];
+			$token = $pushid;
 			$token = str_replace(" ", "", $token);
 			//echo $token . "<BR>";				
 			
@@ -126,7 +131,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 			$msg .= pack('H*', $token) ;
 			$msg .= pack('n', strlen($payload)) ;
 			$msg .=  $payload;
-			
+						
 			// Send it to the server
 			$result = fwrite($fp, $msg, strlen($msg));
 
