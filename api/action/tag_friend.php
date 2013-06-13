@@ -131,7 +131,7 @@
 				
 				mysql_query($sql);
 				
-				//send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $tag_2, $today);
+				send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $tag_2, $today);
 				
 			}else{
 			

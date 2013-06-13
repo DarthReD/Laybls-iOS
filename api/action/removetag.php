@@ -84,8 +84,7 @@
 			
 			$response->tag_1 = $tag_1;
 			$response->tag_2 = $tag_2;
-			
-			
+						
 			//Update frien'd profile
 			$sql = " UPDATE fb_user SET ";
 			$sql .= " tag_1 = " . $tag_1 . ",";
@@ -126,6 +125,4 @@ class Response{
 		$this->message[] = $iMessage;
 	}
 }
-
-
 ?>
