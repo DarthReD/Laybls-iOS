@@ -19,8 +19,8 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 	error_reporting(0);
 
 	// TODO: Put your private key's passphrase here:
-	$passphrase = 'Mehul2015';
-	$cert = 'ckdev.pem';
+	$passphrase = '123456789';
+	$cert = 'ck.pem';
 
 //	$passphrase = 'Sample@1235';
 //	$cert = 'ckdev.pem';
