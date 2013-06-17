@@ -27,7 +27,7 @@
 	if (mysql_num_rows($rs)>0){ 
 		
 		//verify friend
-		$sql = " SELECT friend_id ";
+		$sql = " SELECT friend_id, tag_status ";
 		$sql .= " FROM friend ";
 		$sql .= " WHERE friend_id = " . $friend_id ;
 		$sql .= " AND my_user_id = " . $user_id;
@@ -36,8 +36,12 @@
 		$rs = mysql_query($sql);
 		
 		if (mysql_num_rows($rs)>0){	
-			
+		
 			$response = new Response(1,"success");	
+		
+			$row = mysql_fetch_assoc($rs);
+			
+			$response->tag_status = $row["tag_status"];
 		
 			//get friend's profile
 			$sql = "SELECT name, profile_picture, tag_1, tag_2 ";
@@ -49,7 +53,7 @@
 			//get record from result set
 			$row = mysql_fetch_assoc($rs);
 			
-			$response->name = $row['name'];
+			$response->name = utf8_encode($row['name']);
 			$response->profile_picture = $row['profile_picture'];
 			$response->tag_1 = $row['tag_1'];
 			$response->tag_2 = $row['tag_2'];
@@ -76,7 +80,7 @@
 			$rs = mysql_query($sql);
 			
 			while($row = mysql_fetch_assoc($rs)) {
-					$response->friends[] = $row; //Friends
+					$response->friends[] = rec_utf8_encode($row); //Friends
 			}
 			
 		}else{
@@ -101,6 +105,7 @@ class Response{
 	public $profile_picture;
 	public $tag_1;
 	public $tag_2;
+	public $tag_status;
 	public $friends;
 	
 	public function __construct($iCode, $iMessage ){

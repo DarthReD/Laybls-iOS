@@ -1,5 +1,7 @@
 <?php
 
+	ini_set('max_execution_time', 300);
+
 	// Local DB
 	define('HOST', "192.168.1.11");
 	define('USERNAME', "laybls");

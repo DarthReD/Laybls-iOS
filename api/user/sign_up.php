@@ -50,7 +50,15 @@
 		$response->access_key = $access_key;
 		
 		//get current time
-		$response->last_updates = $today = gmdate('Y-m-d H:i:s', time());
+		$response->last_updates = $today = gmdate('Y-m-d H:i:s', time());		
+		
+		$sql = "UPDATE fb_user SET ";
+		$sql .= " pushid = null ";			
+		$sql .= " WHERE pushid = '" . $data->{'pushid'} . "' ";
+		
+		//echo $sql;
+			
+		mysql_query($sql);	
 		
 		if ($user_id != 0){ // user entry is already added but was not registered
 			$sql = " SELECT ";
@@ -72,7 +80,7 @@
 				
 				$response->is_invited = 1;
 				
-				$response->invitation = $row;
+				$response->invitation = rec_utf8_encode($row);
 			}
 		
 			$sql = "UPDATE fb_user SET ";
@@ -198,6 +206,32 @@
 			$response->friends[] = $friend;
 		}
 		
+		$sql = "INSERT INTO friend (my_user_id, friend_user_id, created_date, modified_date) ";
+		$sql .= " SELECT " . $user_id . ","; 
+		$sql .= " my_user_id, ";
+		$sql .= " sysdate(), sysdate() ";
+		$sql .= " FROM friend ";
+		$sql .= " WHERE friend_user_id = " . $user_id;
+		$sql .= " AND tag_1 <> 0 "; 
+		
+		mysql_query($sql);
+		
+		$sql = "SELECT ";
+		$sql .= " friend.friend_id, friend.friend_user_id, fb_user.name, fb_user.fb_user_id,";
+		$sql .= " fb_user.profile_picture, fb_user.is_registered, fb_user.completed_requests ";
+		$sql .= " FROM friend ";
+		$sql .= " JOIN fb_user ON (friend.friend_user_id = fb_user.user_id) ";
+		$sql .= " WHERE friend.friend_user_id IN (";
+		$sql .= " SELECT friend.my_user_id FROM friend WHERE friend_user_id = " . $user_id;
+		$sql .= " AND tag_1 <> 0 )"; 
+		
+		$rs = mysql_query($sql);
+			
+		while($row = mysql_fetch_assoc($rs)) 
+		{
+			$response->friends_extra[] = rec_utf8_encode($row); //Tag
+		}
+		
 		//Get tag received
 		$sql = "SELECT friend.friend_id, ";
 		$sql .= " ifnull(friend1.tag_1,0) as tag_1, ifnull(friend1.tag_2,0) as tag_2, ";
@@ -226,13 +260,8 @@
 		$rs = mysql_query($sql);
 		
 		while($row = mysql_fetch_assoc($rs)) 
-		{
-			$tag = new Tag();
-			
-			$tag->tag_id = $row["tag_id"];
-			$tag->name = $row["name"];
-			
-			$response->tags[] = $tag; //Tag
+		{			
+			$response->tags[] = rec_utf8_encode($row); //Tag
 		}
 	}
 	
@@ -262,6 +291,8 @@ class Response{
 	//list of friends
 	public $friends;
 
+	public $friends_extra;
+
 	//list of friends
 	public $tag_received;
 	
@@ -274,6 +305,7 @@ class Response{
 		$this->message[] = $iMessage;
 		$this->is_invited = 0;
 		$this->friends = array();		
+		$this->friends_extra = array();		
 		$this->tag_received = array();
 		$this->tags = array();
 

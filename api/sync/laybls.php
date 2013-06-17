@@ -52,7 +52,7 @@
 		
 		while($row = mysql_fetch_assoc($rs)) 
 		{
-			$response->friends[] = $row; //Friends
+			$response->friends[] = rec_utf8_encode($row); //Friends
 		}
 		
 		//Get tag received
@@ -85,8 +85,13 @@
 		
 		while($row = mysql_fetch_assoc($rs)) 
 		{
-			$response->tags[] = $row; //Tag
+			//print_r($row);
+			
+			$response->tags[] = rec_utf8_encode($row); //Tag
+			
 		}
+		
+		//print_r($response->tags);
 		
 		$sql = "UPDATE fb_user SET ";
 		$sql .= " platform = " . $data->{'platform'} . ",";
@@ -105,10 +110,9 @@
 
 	//close databse connection
 	closeDBCon($conn);
-	
+
 	//send response
 	echo json_encode($response);
-
 	
 //response class definition
 class Response{

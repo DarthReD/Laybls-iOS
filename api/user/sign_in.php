@@ -37,7 +37,7 @@
 			$user_id = $row['user_id'];
 			
 			$response->user_id = $user_id;
-			$response->name = $row['name'];
+			$response->name = utf8_encode($row['name']);
 			$response->profile_picture = $row['profile_picture'];
 			$response->tag_1 = $row['tag_1'];
 			$response->tag_2 = $row['tag_2'];
@@ -72,7 +72,7 @@
 				
 				while($row = mysql_fetch_assoc($rs)) 
 				{
-					$response->friends[] = $row; //Friends
+					$response->friends[] = rec_utf8_encode($row); //Friends
 				}
 				
 				//Get tag received
@@ -116,7 +116,7 @@
 				
 				while($row = mysql_fetch_assoc($rs)) 
 				{
-					$response->friends[] = $row; //Friends
+					$response->friends[] = rec_utf8_encode($row); //Friends
 				}
 
 				//Get tag received
@@ -151,13 +151,22 @@
 			
 			while($row = mysql_fetch_assoc($rs)) 
 			{
-				$response->tags[] = $row; //Tag
+				$response->tags[] = rec_utf8_encode($row); //Tag
 			}
 			
+			$sql = "UPDATE fb_user SET ";
+			$sql .= " pushid = null ";			
+			$sql .= " WHERE pushid = '" . $data->{'pushid'} . "' ";
+			
+			//echo $sql;
+				
+			mysql_query($sql);			
+						
 			$sql = "UPDATE fb_user SET ";
 			$sql .= " sessions = sessions+1, ";
 			$sql .= " access_key = '" . $access_key . "', ";
 			$sql .= " platform = " . $data->{'platform'} . ",";
+			$sql .= " badge = 0, ";
 			$sql .= " udid = '" . $data->{'udid'} . "',";			
 			$sql .= " pushid = '" . $data->{'pushid'} . "' ";
 			$sql .= " WHERE user_id = " . $user_id;

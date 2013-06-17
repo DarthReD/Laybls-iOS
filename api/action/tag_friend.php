@@ -29,7 +29,7 @@
 	 
 	if (mysql_num_rows($rs)>0){ 
 		
-		$sql = "SELECT friend_id ";
+		$sql = "SELECT friend_id, tag_status ";
 		$sql .= " FROM friend " ;
 		$sql .= " WHERE my_user_id = " . $from_user_id;
 		$sql .= " AND friend_user_id = " . $to_user_id;
@@ -43,6 +43,7 @@
 			$row = mysql_fetch_assoc($rs);
 			
 			$friend_id = $row["friend_id"];
+			$tag_status = $row["tag_status"];
 			
 			//$sql="SELECT tag_id FROM tag WHERE tag_id IN(".$tag_1 ."," .$tag_2 .")";		
 			
@@ -123,6 +124,11 @@
 				$sql .= " tag_1 = " . $tag_1 . ",";
 				$sql .= " tag_2 = " . $tag_2 . ","; 
 				$sql .= " tag_status = 0,";
+				
+				if ($tag_status == 1){
+					$sql .= " is_updated = 1,";
+				}
+							
 				$sql .= " tag_date = '" . $today . "', ";
 				$sql .= " modified_date = '" . $today . "' ";
 				$sql .= " WHERE friend_id = " . $friend_id;
