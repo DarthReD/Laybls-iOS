@@ -124,7 +124,9 @@
 			$sql .= " AND tag_1 <> 0 ";
 			$sql .= " AND tag_status = 0";
 			
-			mysql_query($sql);
+			//echo $sql;
+			
+			$rs = mysql_query($sql);
 			
 			if(mysql_num_rows($rs) > 0){
 				$row = mysql_fetch_assoc($rs);
@@ -139,7 +141,7 @@
 			$sql .= " tag_2 = " . $tag_2 . ",";
 			$sql .= " badge = " . $badge . ",";
 			
-			if ($s_tag_status == 1 && $r_tag_status==1){
+			if ($s_tag_status == 1 && $r_tag_status == 1){
 				$sql .= " completed_requests = completed_requests - 1, ";
 			}
 			
@@ -209,7 +211,7 @@
 			$sql .= " tag_2 = " . $tag_2 . ",";
 			
 			
-			if ($s_tag_status == 1 && $r_tag_status==1){
+			if ($s_tag_status == 1 && $r_tag_status == 1){
 				$sql .= " completed_requests = completed_requests - 1, ";
 			}
 			
