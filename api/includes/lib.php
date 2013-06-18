@@ -99,7 +99,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 			$tag_2_name = utf8_encode($row['name']);
 					
 			// Message to be sent
-			$message = "Ny anmodning " . $name;
+			$message = "Ny anmodning " . $name; // . " Besvar for at se hvad din ven synes";
 		
 			$ctx = stream_context_create();	
 			

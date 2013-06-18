@@ -241,6 +241,27 @@
 				$response->tag_4 = 0;
 			}			
 			
+			$sql = "SELECT completed_requests ";
+			$sql .= " FROM fb_user ";
+			$sql .= " WHERE user_id = " . $from_user_id; 
+			
+			$rs=mysql_query($sql);
+			
+			$row = mysql_fetch_assoc($rs);	
+			
+			$response->completed_requests_1 = $row["completed_requests"]; 
+			
+			$sql = "SELECT completed_requests ";
+			$sql .= " FROM fb_user ";
+			$sql .= " WHERE user_id = " . $to_user_id; 
+			
+			$rs=mysql_query($sql);
+			
+			$row = mysql_fetch_assoc($rs);	
+			
+			$response->completed_requests_2 = $row["completed_requests"]; 
+			
+			
 		}else{
 			
 			$response= new Response(0,"Access denied, invalid friend reference");
@@ -267,7 +288,8 @@ class Response{
 	public $tag_4;
 	public $tag_3_name;
 	public $tag_4_name;
-	
+	public $completed_requests_1;
+	public $completed_requests_2;
 
 	public function __construct($iCode, $iMessage ){
 		$this->code = $iCode;

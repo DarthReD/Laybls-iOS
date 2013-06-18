@@ -221,6 +221,26 @@
 			mysql_query($sql);	
 			
 			send_apns_notification_on_remove_tag($from_user_id, $to_user_id, $today);
+			
+			$sql = "SELECT completed_requests ";
+			$sql .= " FROM fb_user ";
+			$sql .= " WHERE user_id = " . $from_user_id; 
+			
+			$rs=mysql_query($sql);
+			
+			$row = mysql_fetch_assoc($rs);	
+			
+			$response->completed_requests_1 = $row["completed_requests"]; 
+			
+			$sql = "SELECT completed_requests ";
+			$sql .= " FROM fb_user ";
+			$sql .= " WHERE user_id = " . $to_user_id; 
+			
+			$rs=mysql_query($sql);
+			
+			$row = mysql_fetch_assoc($rs);	
+			
+			$response->completed_requests_2 = $row["completed_requests"]; 
 
 		}else{
 			
@@ -244,7 +264,9 @@ class Response{
 	public $tag_1;
 	public $tag_2;	
 	public $my_tag_1;
-	public $my_tag_2;	
+	public $my_tag_2;
+	public $completed_requests_1;
+	public $completed_requests_2;	
 
 	public function __construct($iCode, $iMessage ){
 		$this->code = $iCode;

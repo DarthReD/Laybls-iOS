@@ -1,4 +1,5 @@
 <?php include('../includes/dbconnect.php'); ?>
+<?php include('../includes/lib.php'); ?>
 <?php
 	header('Content-type: application/json');
 	
