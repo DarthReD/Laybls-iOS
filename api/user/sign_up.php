@@ -221,7 +221,8 @@
 		$sql .= " fb_user.profile_picture, fb_user.is_registered, fb_user.completed_requests ";
 		$sql .= " FROM friend ";
 		$sql .= " JOIN fb_user ON (friend.friend_user_id = fb_user.user_id) ";
-		$sql .= " WHERE friend.friend_user_id IN (";
+		$sql .= " WHERE friend.my_user_id = " . $user_id ;
+		$sql .= " AND friend.friend_user_id IN (";		
 		$sql .= " SELECT friend.my_user_id FROM friend WHERE friend_user_id = " . $user_id;
 		$sql .= " AND tag_1 <> 0 )"; 
 		
