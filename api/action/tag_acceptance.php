@@ -147,7 +147,6 @@
 				
 			}
 			
-			
 			//find out maximum tag accepted
 			$sql = " SELECT max_tag.tag, tag.name, max(cntr) as mcntr FROM ( ";
 			$sql .= " 	SELECT tag, ifnull(sum(cnt),0) as cntr FROM ( ";
@@ -297,6 +296,5 @@ class Response{
 		$this->message[] = $iMessage;
 	}
 }
-
 
 ?>

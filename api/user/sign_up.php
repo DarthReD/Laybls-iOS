@@ -5,7 +5,7 @@
 	
 	//read json from request
 	$data = json_decode($_POST['data']);
-	
+		
 	//open databse connection
 	$conn = openDBCon();
 
@@ -61,6 +61,7 @@
 		mysql_query($sql);	
 		
 		if ($user_id != 0){ // user entry is already added but was not registered
+			/*
 			$sql = " SELECT ";
 			$sql .= " fb_user.user_id as from_user_id, fb_user.name, fb_user.profile_picture, ";
 			$sql .= " friend.tag_1, friend.tag_2, ";
@@ -82,6 +83,7 @@
 				
 				$response->invitation = rec_utf8_encode($row);
 			}
+			*/
 		
 			$sql = "UPDATE fb_user SET ";
 			$sql .= "name = '" . $name . "',";
@@ -213,26 +215,35 @@
 		$sql .= " FROM friend ";
 		$sql .= " WHERE friend_user_id = " . $user_id;
 		$sql .= " AND tag_1 <> 0 "; 
+		$sql .= " AND my_user_id NOT IN ";
+		$sql .= " (SELECT friend_user_id FROM friend where my_user_id = " . $user_id . ")";
 		
 		mysql_query($sql);
 		
 		$sql = "SELECT ";
 		$sql .= " friend.friend_id, friend.friend_user_id, fb_user.name, fb_user.fb_user_id,";
-		$sql .= " fb_user.profile_picture, fb_user.is_registered, fb_user.completed_requests ";
+		$sql .= " fb_user.profile_picture, fb_user.is_registered, fb_user.completed_requests, ";
+		$sql .= " fb_user.tag_1 as friend_tag_1, fb_user.tag_2 as friend_tag_2, friend1.created_date,";
+		$sql .= " friend1.tag_1, friend1.tag_2 ";
 		$sql .= " FROM friend ";
 		$sql .= " JOIN fb_user ON (friend.friend_user_id = fb_user.user_id) ";
+		$sql .= " JOIN friend as friend1 ON (friend.my_user_id = friend1.friend_user_id AND ";
+		$sql .= " friend.friend_user_id = friend1.my_user_id) ";
 		$sql .= " WHERE friend.my_user_id = " . $user_id ;
 		$sql .= " AND friend.friend_user_id IN (";		
 		$sql .= " SELECT friend.my_user_id FROM friend WHERE friend_user_id = " . $user_id;
 		$sql .= " AND tag_1 <> 0 )"; 
 		
+		//echo $sql;
+		
 		$rs = mysql_query($sql);
 			
 		while($row = mysql_fetch_assoc($rs)) 
 		{
-			$response->friends_extra[] = rec_utf8_encode($row); //Tag
+			$response->tag_received[] = rec_utf8_encode($row); //Tag
 		}
 		
+		/*
 		//Get tag received
 		$sql = "SELECT friend.friend_id, ";
 		$sql .= " ifnull(friend1.tag_1,0) as tag_1, ifnull(friend1.tag_2,0) as tag_2, ";
@@ -252,6 +263,7 @@
 		{
 			$response->tag_received[] = $row; //Friends
 		}
+		*/
 		
 		//retrieve TAGs
 		$sql = "SELECT tag_id, name FROM tag";

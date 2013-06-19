@@ -151,7 +151,6 @@
 			//echo $sql;
 			
 			mysql_query($sql);			
-			
 
 			//Update Receiver Side////////////////////////////////////////////////////			
 			$sql = " UPDATE friend SET ";
