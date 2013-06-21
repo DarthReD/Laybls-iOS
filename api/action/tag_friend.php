@@ -24,7 +24,7 @@
 		$conn = openDBCon();
 		
 		//verify user existance
-		$sql = "SELECT user_id ";
+		$sql = "SELECT user_id  ";
 		$sql .= " FROM fb_user ";
 		$sql .= " WHERE user_id = " . $from_user_id . " AND ";
 		$sql .= " access_key='" . $access_key . "'";
@@ -34,7 +34,7 @@
 		$rs = mysql_query($sql);
 		 
 		if (mysql_num_rows($rs)>0){ 
-			
+					
 			$sql = "SELECT friend_id, tag_status ";
 			$sql .= " FROM friend " ;
 			$sql .= " WHERE my_user_id = " . $from_user_id;
@@ -290,6 +290,42 @@
 						
 					}
 					
+					//sender's profile
+					$sql = "SELECT fb_user.tag_1, fb_user.tag_2, fb_user.completed_requests, "
+					$sql .= " tag1.name as tag_1_name, tag2.name as tag_2_name ";
+					$sql .= " FROM fb_user ";
+					$sql .= " JOIN tag as tag1 ON (fb_user.tag_1 = tag1.tag_id) ";
+					$sql .= " JOIN tag as tag2 ON (fb_user.tag_2 = tag2.tag_id)	";
+					$sql .= " WHERE fb_user.user_id = " . $from_user_id;
+					
+					rs = mysql_query($sql);	
+					
+					$row = mysql_fetch_assoc($rs);
+					
+					$response->tag_3 = $row["tag_1"];
+					$response->tag_4 = $row["tag_2"];
+					$response->tag_3_name = $row["tag_1_name"];
+					$response->tag_4_name = $row["tag_2_name"];
+					$response->completed_requests1 = $row["completed_requests"];
+
+					//receiver's profile
+					$sql = "SELECT fb_user.tag_1, fb_user.tag_2, fb_user.completed_requests, "
+					$sql .= " tag1.name as tag_1_name, tag2.name as tag_2_name ";
+					$sql .= " FROM fb_user ";
+					$sql .= " JOIN tag as tag1 ON (fb_user.tag_1 = tag1.tag_id) ";
+					$sql .= " JOIN tag as tag2 ON (fb_user.tag_2 = tag2.tag_id)	";
+					$sql .= " WHERE fb_user.user_id = " . $to_user_id;
+					
+					rs = mysql_query($sql);	
+					
+					$row = mysql_fetch_assoc($rs);
+					
+					$response->tag_5 = $row["tag_1"];
+					$response->tag_6 = $row["tag_2"];
+					$response->tag_5_name = $row["tag_1_name"];
+					$response->tag_6_name = $row["tag_2_name"];
+					$response->completed_requests2 = $row["completed_requests"];
+					
 				}else{
 				
 					$response= new Response(0,"Access denied, invalid tag reference");
@@ -324,6 +360,20 @@ class Response{
 	public $tag_2;
 	public $tag_1_name;
 	public $tag_2_name;
+
+	//my tags
+	public $tag_3;
+	public $tag_4;
+	public $tag_3_name;
+	public $tag_4_name;
+	public $completed_requests1;
+
+	//my friend's tags
+	public $tag_5;
+	public $tag_6;
+	public $tag_5_name;
+	public $tag_6_name;
+	public completed_requests2;
 
 	public function __construct($iCode, $iMessage ){
 		$this->code = $iCode;
