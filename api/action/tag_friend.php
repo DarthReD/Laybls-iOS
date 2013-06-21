@@ -135,7 +135,7 @@
 					//echo $sql;
 				   
 					$rs=mysql_query($sql);
-					
+			
 					$tag_status = 0;
 			
 					if(mysql_num_rows($rs) > 0){
@@ -149,6 +149,12 @@
 						{
 							$tag_status = 1;
 						}
+					}else{
+						$sql = " INSERT into friend ";
+						$sql .= " (my_user_id, friend_user_id, created_date, modified_date) values (";
+						$sql .= $to_user_id . ",";
+						$sql .= $from_user_id . ",";
+						$sql .= "'" . $today . "','" . $today . "')";
 					}
 					
 					$sql = " UPDATE friend SET ";
