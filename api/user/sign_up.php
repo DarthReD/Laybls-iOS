@@ -19,6 +19,7 @@
 		
 	$rs = mysql_query($sql);
 	
+	
 	if (mysql_num_rows($rs) > 0)
 	{
 		$row = mysql_fetch_assoc($rs);
@@ -30,6 +31,11 @@
 		$is_registered = 0;	
 	}	
 	
+	if (VERSION <> $data->{'version'})
+	{
+		$response = new Response(0,"Access denied");
+	}
+	else	
 	if ($is_registered == 1)
 	{
 		$response = new Response(0,"User is already registered");

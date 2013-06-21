@@ -11,6 +11,8 @@
 	
 	define('debug_mode',true);
 	
+	define('VERSION','1.0');
+	
 	if(debug_mode){
 		error_reporting(E_ALL); 
 		ini_set('log_errors','1'); 

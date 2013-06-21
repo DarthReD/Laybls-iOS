@@ -9,7 +9,7 @@ function randomString($len) {
         $pass[] = $alphabet[$n];
     }
     return implode($pass); //turn the array into a string
-}
+} 
 
 function rec_utf8_encode($inputstring){
 	
@@ -24,7 +24,7 @@ function rec_utf8_encode($inputstring){
 	return $cleanstring;
 }
 
-function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $tag_2, $today){
+function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $tag_2, $tag_status, $today){
 
 	ini_set('display_errors', 'Off');
 	ini_set('display_startup_errors', 'Off');
@@ -99,7 +99,7 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 			$tag_2_name = utf8_encode($row['name']);
 					
 			// Message to be sent
-			$message = "Ny anmodning " . $name; // . " Besvar for at se hvad din ven synes";
+			$message = "Ny anmodning fra " . $name; // . " Besvar for at se hvad din ven synes";
 		
 			$ctx = stream_context_create();	
 			
@@ -126,9 +126,8 @@ function send_apns_notification_on_tagging($from_user_id, $to_user_id, $tag_1, $
 				$body['friend_id'] = $friend_id;
 				$body['tag_1'] = $tag_1;
 				$body['tag_2'] = $tag_2;
-				$body['tag_status'] = 0;
+				$body['tag_status'] = $tag_status;
 				$body['created_date'] = $today;
-				
 				
 				//print_r($body);
 				
@@ -264,7 +263,7 @@ function send_apns_notification_on_remove_tag($from_user_id, $to_user_id, $today
 			$my_tag_2 = $row['tag_2'];
 								
 			// Message to be sent
-			$message = $name . " lide dit ord";
+			$message = "Givne ord slettet ved " . $name ;
 		
 			$ctx = stream_context_create();	
 			
