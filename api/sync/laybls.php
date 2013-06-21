@@ -39,7 +39,7 @@
 			$response = new Response(1,"Success");
 			
 			$response->tag_1 = $row["tag_1"];
-			$response->tag_1 = $row["tag_2"];
+			$response->tag_2 = $row["tag_2"];
 			$response->completed_requests = $row["completed_requests"];
 			
 			
