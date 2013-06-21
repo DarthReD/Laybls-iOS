@@ -155,6 +155,8 @@
 						$sql .= $to_user_id . ",";
 						$sql .= $from_user_id . ",";
 						$sql .= "'" . $today . "','" . $today . "')";
+						
+						mysql_query($sql);
 					}
 					
 					$sql = " UPDATE friend SET ";
