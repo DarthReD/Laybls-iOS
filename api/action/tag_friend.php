@@ -156,7 +156,7 @@
 						$sql .= $from_user_id . ",";
 						$sql .= "'" . $today . "','" . $today . "')";
 						
-						//echo $sql;
+						// echo $sql;
 						
 						mysql_query($sql);
 					}
