@@ -49,7 +49,7 @@
 				$row = mysql_fetch_assoc($rs);
 				
 				$friend_id = $row["friend_id"];
-				$tag_status = $row["tag_status"];
+				$s_tag_status = $row["tag_status"];
 				
 				//$sql="SELECT tag_id FROM tag WHERE tag_id IN(".$tag_1 ."," .$tag_2 .")";		
 				
@@ -136,7 +136,11 @@
 				   
 					$rs=mysql_query($sql);
 			
-					$tag_status = 0;
+					if ($s_tag_status == 0){
+						$tag_status = 0;
+					}else{
+						$tag_status = 1;
+					}
 			
 					if(mysql_num_rows($rs) > 0){
 					
@@ -165,6 +169,11 @@
 					$sql .= " tag_1 = " . $tag_1 . ",";
 					$sql .= " tag_2 = " . $tag_2 . ","; 
 					$sql .= " tag_status = " . $tag_status . ",";
+					
+					if ($s_tag_status == 1){
+						$sql .= " is_updated = 1,";
+					}
+					
 					$sql .= " tag_date = '" . $today . "', ";
 					$sql .= " modified_date = '" . $today . "' ";
 					$sql .= " WHERE friend_id = " . $friend_id;
@@ -218,7 +227,11 @@
 						$sql = " UPDATE fb_user SET ";
 						$sql .= " tag_1 = " . $tag_1 . ",";
 						$sql .= " tag_2 = " . $tag_2 . ",";
-						$sql .= " completed_requests = completed_requests + 1, ";
+						
+						if ($s_tag_status == 0 && $tag_status == 1){
+							$sql .= " completed_requests = completed_requests + 1, ";
+						}
+						
 						$sql .= " modified_date = '" . $today . "' ";
 						$sql .= " WHERE user_id = " . $from_user_id; 						
 						
@@ -266,7 +279,10 @@
 						$sql = " UPDATE fb_user SET ";
 						$sql .= " tag_1 = " . $tag_1 . ",";
 						$sql .= " tag_2 = " . $tag_2 . ",";
-						$sql .= " completed_requests = completed_requests + 1, ";
+						
+						if ($s_tag_status == 0 && $tag_status == 1){
+							$sql .= " completed_requests = completed_requests + 1, ";
+						}
 						$sql .= " modified_date = '" . $today . "' ";
 						$sql .= " WHERE user_id = " . $to_user_id; 
 						
