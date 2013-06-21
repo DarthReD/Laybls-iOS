@@ -155,11 +155,6 @@
 					$sql .= " tag_1 = " . $tag_1 . ",";
 					$sql .= " tag_2 = " . $tag_2 . ","; 
 					$sql .= " tag_status = " . $tag_status . ",";
-					
-					if ($tag_status == 1){
-						$sql .= " is_updated = 1,";
-					}
-								
 					$sql .= " tag_date = '" . $today . "', ";
 					$sql .= " modified_date = '" . $today . "' ";
 					$sql .= " WHERE friend_id = " . $friend_id;

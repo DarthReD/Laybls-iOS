@@ -20,7 +20,7 @@
 		$conn = openDBCon();
 		
 		//verify user existance
-		$sql = "SELECT count(user_id) as cnt FROM fb_user ";
+		$sql = "SELECT count(user_id) as cnt, tag_1, tag_2, completed_requests FROM fb_user ";
 		$sql .= " WHERE user_id = " . $user_id ;
 		$sql .= " AND access_key = '" . $access_key . "'";
 		
@@ -37,6 +37,11 @@
 		else
 		{
 			$response = new Response(1,"Success");
+			
+			$response->tag_1 = $row["tag_1"];
+			$response->tag_1 = $row["tag_2"];
+			$response->completed_requests = $row["completed_requests"];
+			
 			
 			//Retrieve Friends whose profile has changed
 			$sql = " SELECT friend.friend_id, ";
@@ -126,6 +131,10 @@
 class Response{
 	public $code;
 	public $message;
+	
+	public $tag_1;
+	public $tag_2;
+	public $completed_requests;
 	
 	public $last_updates;	
 	
