@@ -132,7 +132,7 @@
 					$sql .= " WHERE my_user_id = " . $to_user_id;
 					$sql .= " AND friend_user_id = " . $from_user_id ;
 					
-					echo $sql;
+					//echo $sql;
 				   
 					$rs=mysql_query($sql);
 			
@@ -156,7 +156,7 @@
 						$sql .= $from_user_id . ",";
 						$sql .= "'" . $today . "','" . $today . "')";
 						
-						echo $sql;
+						//echo $sql;
 						
 						mysql_query($sql);
 					}

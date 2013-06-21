@@ -214,6 +214,7 @@
 			$response->friends[] = $friend;
 		}
 		
+		/*
 		$sql = "INSERT INTO friend (my_user_id, friend_user_id, created_date, modified_date) ";
 		$sql .= " SELECT " . $user_id . ","; 
 		$sql .= " my_user_id, ";
@@ -223,6 +224,7 @@
 		$sql .= " AND tag_1 <> 0 "; 
 		$sql .= " AND my_user_id NOT IN ";
 		$sql .= " (SELECT friend_user_id FROM friend where my_user_id = " . $user_id . ")";
+		*/
 		
 		mysql_query($sql);
 		
