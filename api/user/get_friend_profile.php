@@ -69,7 +69,11 @@
 				$sql =  " SELECT fb_user.name, fb_user.profile_picture, ";
 				$sql .= " friend.tag_1, friend.tag_2, ";
 				$sql .= " tag1.name as tag_1_name, tag2.name as tag_2_name, ";
-				$sql .= " friend.tag_status ";
+				$sql .= " friend.tag_status, ";
+				$sql .= " CASE WHEN (friend.tag_1 = " . $response->tag_1 ;
+				$sql .= " OR friend.tag_1 = " . $response->tag_2 ;
+				$sql .= " OR friend.tag_2 = " . $response->tag_1 ;
+				$sql .= " OR friend.tag_2 = " . $response->tag_2 . ") THEN 1 ELSE 0 END AS do_match";
 				$sql .= " FROM friend ";
 				$sql .= " JOIN fb_user ON (friend.my_user_id = fb_user.user_id) ";
 				$sql .= " JOIN tag as tag1 ON (tag1.tag_id = friend.tag_1) ";
@@ -77,11 +81,7 @@
 				$sql .= " WHERE friend.friend_user_id = " . $friend_user_id;
 				$sql .= " AND friend.my_user_id <> " . $user_id;			
 				$sql .= " AND friend.tag_status = 1 " ;
-				$sql .= " AND (friend.tag_1 = " . $response->tag_1 ;
-				$sql .= " OR friend.tag_1 = " . $response->tag_2 ;
-				$sql .= " OR friend.tag_2 = " . $response->tag_1 ;
-				$sql .= " OR friend.tag_2 = " . $response->tag_2 . ")";
-				$sql .= " ORDER BY fb_user.name ";
+				$sql .= " ORDER BY do_match DESC, fb_user.name ";
 				
 				//echo $sql;
 				

@@ -121,8 +121,8 @@
 					
 					$response->tag_1 = $tag_1;
 					$response->tag_2 = $tag_2;
-					$response->tag_1_name = $tag_1_name;
-					$response->tag_2_name = $tag_2_name;
+					$response->tag_1_name = utf8_encode($tag_1_name);
+					$response->tag_2_name = utf8_encode($tag_2_name);
 					
 					$today = gmdate('Y-m-d H:i:s', time());
 					
@@ -291,40 +291,52 @@
 					}
 					
 					//sender's profile
-					$sql = "SELECT fb_user.tag_1, fb_user.tag_2, fb_user.completed_requests, "
+					$sql = "SELECT fb_user.tag_1, fb_user.tag_2, fb_user.completed_requests, ";
 					$sql .= " tag1.name as tag_1_name, tag2.name as tag_2_name ";
 					$sql .= " FROM fb_user ";
 					$sql .= " JOIN tag as tag1 ON (fb_user.tag_1 = tag1.tag_id) ";
 					$sql .= " JOIN tag as tag2 ON (fb_user.tag_2 = tag2.tag_id)	";
 					$sql .= " WHERE fb_user.user_id = " . $from_user_id;
 					
-					rs = mysql_query($sql);	
+					$rs = mysql_query($sql);	
 					
-					$row = mysql_fetch_assoc($rs);
-					
-					$response->tag_3 = $row["tag_1"];
-					$response->tag_4 = $row["tag_2"];
-					$response->tag_3_name = $row["tag_1_name"];
-					$response->tag_4_name = $row["tag_2_name"];
-					$response->completed_requests1 = $row["completed_requests"];
+					if (mysql_num_rows($rs)>0){ 
+						$row = mysql_fetch_assoc($rs);
+						
+						$response->tag_3 = $row["tag_1"];
+						$response->tag_4 = $row["tag_2"];
+						$response->tag_3_name = $row["tag_1_name"];
+						$response->tag_4_name = $row["tag_2_name"];
+						$response->completed_requests1 = $row["completed_requests"];
+					}else{
+						$response->tag_3 = 0;
+						$response->tag_4 = 0;
+						$response->completed_requests1 = 0;
+					}
 
 					//receiver's profile
-					$sql = "SELECT fb_user.tag_1, fb_user.tag_2, fb_user.completed_requests, "
+					$sql = "SELECT fb_user.tag_1, fb_user.tag_2, fb_user.completed_requests, ";
 					$sql .= " tag1.name as tag_1_name, tag2.name as tag_2_name ";
 					$sql .= " FROM fb_user ";
 					$sql .= " JOIN tag as tag1 ON (fb_user.tag_1 = tag1.tag_id) ";
 					$sql .= " JOIN tag as tag2 ON (fb_user.tag_2 = tag2.tag_id)	";
 					$sql .= " WHERE fb_user.user_id = " . $to_user_id;
 					
-					rs = mysql_query($sql);	
-					
-					$row = mysql_fetch_assoc($rs);
-					
-					$response->tag_5 = $row["tag_1"];
-					$response->tag_6 = $row["tag_2"];
-					$response->tag_5_name = $row["tag_1_name"];
-					$response->tag_6_name = $row["tag_2_name"];
-					$response->completed_requests2 = $row["completed_requests"];
+					$rs = mysql_query($sql);	
+
+					if (mysql_num_rows($rs)>0){ 
+						$row = mysql_fetch_assoc($rs);
+						
+						$response->tag_5 = $row["tag_1"];
+						$response->tag_6 = $row["tag_2"];
+						$response->tag_5_name = $row["tag_1_name"];
+						$response->tag_6_name = $row["tag_2_name"];
+						$response->completed_requests2 = $row["completed_requests"];
+					}else{
+						$response->tag_5 = 0;
+						$response->tag_6 = 0;
+						$response->completed_requests2 = 0;					
+					}
 					
 				}else{
 				
@@ -373,7 +385,7 @@ class Response{
 	public $tag_6;
 	public $tag_5_name;
 	public $tag_6_name;
-	public completed_requests2;
+	public $completed_requests2;
 
 	public function __construct($iCode, $iMessage ){
 		$this->code = $iCode;

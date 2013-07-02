@@ -35,7 +35,7 @@
 		
 		// echo $sql;
 	   
-		$rs=mysql_query($sql);
+		//$rs=mysql_query($sql);
 		
 		$response= new response(1,"Success");
 						

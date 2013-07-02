@@ -226,7 +226,7 @@
 		$sql .= " (SELECT friend_user_id FROM friend where my_user_id = " . $user_id . ")";
 		*/
 		
-		mysql_query($sql);
+		//mysql_query($sql);
 		
 		$sql = "SELECT ";
 		$sql .= " friend.friend_id, friend.friend_user_id, fb_user.name, fb_user.fb_user_id,";
@@ -349,6 +349,7 @@ class Invitation{
 	{
 	}
 }
+
 class Friend{
 	//unique identitication
 	public $friend_id;
