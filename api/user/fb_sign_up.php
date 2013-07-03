@@ -30,11 +30,13 @@
 		$config['appId'] = '521639034535212';
 		$config['secret'] = 'fb377c54a63bcf4c03643962c0d88d85';
 		
+		
 		/*
 		$config = array();
 		$config['appId'] = '198477263638959';
 		$config['secret'] = 'dd41e12241c8adacd050e258580e34d9';
 		*/
+		
 		
 		$token_url = "https://graph.facebook.com/oauth/access_token?" .
 			"client_id=" . $config['appId'] .
@@ -46,16 +48,8 @@
 		$fb_user_id = number_format($data->{'fb_user_id'},0,'','');
 		
 		//$fb_token = $data->{'access_token'};
-		
-		//$fb_token = 
-
-"CAAHabY1avSwBAAiD1m3Qoz66wE6qAKr5w0GbQnzEEiCbbuJD86ZAuRXI8W8LrPZC4VLvsqPZBDTTLuTJ80GYXxZBA2nKQp2mWGBY6atrnV2MYVuPl1oKcFmQGNs
-
-IZBWIj5RoTASpwZB2SdoERdQB8fG1xQ4ZAXQdsGzjk8h8dzTFYq2gkZBnE2OEnZBzXFK9ttwMKDPMwZAlmF7QhNi7hevA5IRcBLetRB9VIZD";
-		
-		$url = 'https://graph.facebook.com/' . $fb_user_id . '/?fields=id,name,picture.width(120).height
-
-(120),friends.fields(id,name,picture.width(120).height(120))&access_token='.$fb_token;
+				
+		$url = 'https://graph.facebook.com/' . $fb_user_id . '/?fields=id,name,picture.width(120).height(120),friends.fields(id,name,picture.width(120).height(120))&access_token='.$fb_token;
 		
 		//echo $url;
 		
@@ -65,6 +59,8 @@ IZBWIj5RoTASpwZB2SdoERdQB8fG1xQ4ZAXQdsGzjk8h8dzTFYq2gkZBnE2OEnZBzXFK9ttwMKDPMwZA
 		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,60);
 		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,true);
 		$buffer = rec_utf8_encode(curl_exec($curl_handle));
+		
+		//echo $buffer;
 		
 		curl_close($curl_handle);
 		
