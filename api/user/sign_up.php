@@ -248,7 +248,7 @@
 			
 		while($row = mysql_fetch_assoc($rs)) 
 		{
-			$response->tag_received[] = rec_utf8_encode($row); //Tag
+			$response->tag_received[] = $row; //Tag
 		}
 		
 		/*
@@ -282,7 +282,7 @@
 		
 		while($row = mysql_fetch_assoc($rs)) 
 		{			
-			$response->tags[] = rec_utf8_encode($row); //Tag
+			$response->tags[] = $row; //Tag
 		}
 	}
 	

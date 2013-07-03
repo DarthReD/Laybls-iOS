@@ -64,9 +64,9 @@
 			
 			while($row = mysql_fetch_assoc($rs)) 
 			{
-				$response->friends[] = rec_utf8_encode($row); //Friends
+				$response->friends[] = $row; //Friends
 				
-				$sql = " UPDATE FRIEND ";
+				$sql = " UPDATE friend ";
 				$sql .= " SET is_synced = 1 ";
 				$sql .= " WHERE friend_id = " . $row["friend_id"];
 				
@@ -97,8 +97,8 @@
 			
 			while($row = mysql_fetch_assoc($rs)) 
 			{
-				$response->tag_received[] = rec_utf8_encode($row); //Friends
-				$sql = " UPDATE FRIEND ";
+				$response->tag_received[] = $row; //Friends
+				$sql = " UPDATE friend ";
 				$sql .= " SET is_synced = 1 ";
 				$sql .= " WHERE friend_id = " . $row["friend_id"];
 				
@@ -124,9 +124,9 @@
 			
 			while($row = mysql_fetch_assoc($rs)) 
 			{
-				$response->friends[] = rec_utf8_encode($row); //Friends
+				$response->friends[] = $row; //Friends
 				
-				$sql = " UPDATE FRIEND ";
+				$sql = " UPDATE friend ";
 				$sql .= " SET is_synced = 1 ";
 				$sql .= " WHERE friend_id = " . $row["friend_id"];
 				
@@ -145,7 +145,7 @@
 			{
 				//print_r($row);
 				
-				$response->tags[] = $row; //rec_utf8_encode($row); //Tag
+				$response->tags[] = $row;  //Tag
 				
 			}
 			

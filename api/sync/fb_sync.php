@@ -53,7 +53,7 @@ if ($field == "friends"){
 	curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, FALSE);
 	curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,60);
 	curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,true);
-	$buffer = curl_exec($curl_handle);
+	$buffer = rec_utf8_encode(curl_exec($curl_handle));
 	
 	curl_close($curl_handle);
 	

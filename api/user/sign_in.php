@@ -53,7 +53,7 @@
 				$response->access_key = $row['access_key'];				
 				
 				//set sync flag
-				$sql = " UPDATE Friend SET is_synced = 0 ";
+				$sql = " UPDATE friend SET is_synced = 0 ";
 				$sql .= " WHERE my_user_id = " . $user_id;
 				
 				mysql_query($sql);
@@ -79,7 +79,7 @@
 				{
 					$response->friends[] = $row; //Friends
 					
-					$sql = " UPDATE FRIEND ";
+					$sql = " UPDATE friend ";
 					$sql .= " SET is_synced = 1 ";
 					$sql .= " WHERE friend_id = " . $row["friend_id"];
 					

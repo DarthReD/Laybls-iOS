@@ -3,7 +3,8 @@
 <?php
 	header('Content-type: application/json');
 	
-	
+	//start the output buffer
+	ob_start();
 
 	$start_t = gmdate('Y-m-d H:i:s', time());
 		
@@ -46,9 +47,15 @@
 		
 		//$fb_token = $data->{'access_token'};
 		
-		//$fb_token = "CAAHabY1avSwBAAiD1m3Qoz66wE6qAKr5w0GbQnzEEiCbbuJD86ZAuRXI8W8LrPZC4VLvsqPZBDTTLuTJ80GYXxZBA2nKQp2mWGBY6atrnV2MYVuPl1oKcFmQGNsIZBWIj5RoTASpwZB2SdoERdQB8fG1xQ4ZAXQdsGzjk8h8dzTFYq2gkZBnE2OEnZBzXFK9ttwMKDPMwZAlmF7QhNi7hevA5IRcBLetRB9VIZD";
+		//$fb_token = 
+
+"CAAHabY1avSwBAAiD1m3Qoz66wE6qAKr5w0GbQnzEEiCbbuJD86ZAuRXI8W8LrPZC4VLvsqPZBDTTLuTJ80GYXxZBA2nKQp2mWGBY6atrnV2MYVuPl1oKcFmQGNs
+
+IZBWIj5RoTASpwZB2SdoERdQB8fG1xQ4ZAXQdsGzjk8h8dzTFYq2gkZBnE2OEnZBzXFK9ttwMKDPMwZAlmF7QhNi7hevA5IRcBLetRB9VIZD";
 		
-		$url = 'https://graph.facebook.com/' . $fb_user_id . '/?fields=id,name,picture.width(120).height(120),friends.fields(id,name,picture.width(120).height(120))&access_token='.$fb_token;
+		$url = 'https://graph.facebook.com/' . $fb_user_id . '/?fields=id,name,picture.width(120).height
+
+(120),friends.fields(id,name,picture.width(120).height(120))&access_token='.$fb_token;
 		
 		//echo $url;
 		
@@ -57,7 +64,7 @@
 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,60);
 		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,true);
-		$buffer = curl_exec($curl_handle);
+		$buffer = rec_utf8_encode(curl_exec($curl_handle));
 		
 		curl_close($curl_handle);
 		
@@ -173,7 +180,7 @@
 			
 		while($row = mysql_fetch_assoc($rs)) 
 		{
-			$response->tag_received[] = rec_utf8_encode($row); //Tag
+			$response->tag_received[] = $row; //Tag
 		}
 		
 		///////////////////proces friends
@@ -290,11 +297,19 @@
 			$friend->tag_2 = $tag_2;
 			
 			$response->friends[] = $friend;
+
 			
-			if ($ele == (PAGE_SIZE -1)){
+			if ($ele == (PAGE_SIZE - 1)){
 				$response->end_t = gmdate('Y-m-d H:i:s', time());
 				//send response
 				echo json_encode($response);
+
+				//tell the browser not to expect any more content and close the connection
+				header("Content-Length: " . ob_get_length());
+				header("Connection: close");
+				ob_end_flush(); 
+				ob_flush(); 
+				flush(); 
 			}
 			
 		}
@@ -307,6 +322,9 @@
 		//send response
 		$response->end_t = gmdate('Y-m-d H:i:s', time());
 		echo json_encode($response);
+		ob_end_flush(); 
+		ob_flush(); 
+		flush(); 
 	}
 	
 	//echo gmdate('Y-m-d H:i:s', time());

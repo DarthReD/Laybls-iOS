@@ -88,7 +88,7 @@
 				$rs = mysql_query($sql);
 				
 				while($row = mysql_fetch_assoc($rs)) {
-						$response->friends[] = rec_utf8_encode($row); //Friends
+						$response->friends[] = $row; //Friends
 				}
 				
 			}else{
