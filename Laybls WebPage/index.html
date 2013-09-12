@@ -1,0 +1,97 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Mesto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style type="text/css">
+body, div, ul, ol, li, h1, h2, h3, h4, h5, h6, p, a, img {
+	margin:0;
+	padding:0;
+	border:none;
+}
+body {
+	background-repeat: no-repeat;
+	background-color:#ebebeb;
+}
+
+#wrapper {
+	background-image: url(images/background.jpg);
+	background-position: center top;
+	background-repeat: no-repeat;
+	height: 600px;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#wrapper #content {
+	height:500px;
+	text-align:center;
+	position:relative;
+	top:190px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#wrapper #content #menu {
+	position:relative;
+	top:30px;
+}
+
+#wrapper #content #menu li {
+	position:relative;
+	margin-bottom:10px;
+	list-style: none;
+	padding: 0;
+}
+
+#wrapper #footer {
+	background-image: url(images/footer-line.png);
+	background-repeat:no-repeat;
+	background-position:center top;
+	text-align:center;
+	position: relative;
+	top:80px;
+	margin-left:auto;
+	margin-right:auto;	
+}
+
+#wrapper #footer p {
+	font-family:Helvetica, Arial, sans-serif;
+	color:#3f3f3f;	
+	margin-top:auto;
+	padding-top:10px;
+}
+#wrapper #footer p a {
+	color:#47f7ff;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+  <div id="content">
+ 	 <div id="menu">
+  	<ul>
+  		<li><a href="mailto:tim@laybls.com"><img src="images/feedback.png" name="feedbimg" width="293" height="73" id="feedbimg" onmousedown="document.getElementById('feedbimg').src='images/feedbackDown.png';"
+  			 onmouseup="document.getElementById('feedbimg').src='images/feedback.png';"></a></li>
+  		
+		<li><a href="http://itunes.apple.com/dk/app/mesto/id467602649?l=da&mt=8"><img src="images/rateus.png" name="rateimg" width="293" height="73" id="rateimg" onmousedown="document.getElementById('rateimg').src='images/rateusDown.png';
+			"onmouseup="document.getElementById('rateimg').src='images/rateus.png';"></a></li>
+  		
+		<li><a href="mailto:tim@laybls.com"><img src="images/contact.png" name="contactimg" width="293" height="73" id="contactimg" onmousedown="document.getElementById('contactimg').src='images/contactDown.png';"
+			onmouseup="document.getElementById('contactimg').src='images/contact.png';"></a></li>
+		
+		<li><a href="http://www.facebook.com/laybls"><img src="images/facebook.png" name="facebookimg" width="293" height="73" id="facebookimg" onmousedown="document.getElementById('facebookimg').src='images/facebookDown.png';
+		"onmouseup="document.getElementById('facebookimg').src='images/facebook.png';" widht="273"></a></li>
+  	</ul>
+	</div>
+  </div><!-- content -->
+  <div id="footer">
+  		<p>Laybls findes kun til iPhone. Android version er under udvikling.. Sit tight.<br>
+  		Mesto CVR# 34502161<br>
+	Taarbæk Strandvej 59 2930</p>
+  </div><!-- footer -->
+</div><!--wrapper -->
+</body>
+</html>
